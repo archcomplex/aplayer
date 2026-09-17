@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="wrap_content" android:minHeight="64dp"
+    android:orientation="vertical" android:padding="10dp">
+    <TextView android:id="@+id/track_title" android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:textAppearance="?attr/textAppearanceTitleMedium" android:maxLines="1" android:ellipsize="end" />
+    <TextView android:id="@+id/track_details" android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:textAppearance="?attr/textAppearanceBodyMedium" android:maxLines="1" android:ellipsize="end" />
+</LinearLayout>
