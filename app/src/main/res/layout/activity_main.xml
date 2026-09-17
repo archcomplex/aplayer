@@ -18,6 +18,26 @@
         <Button android:id="@+id/play_button" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Пауза/▶" />
         <Button android:id="@+id/next_button" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="⏭" />
     </LinearLayout>
+
+    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+        android:layout_marginTop="12dp" android:text="Громкость" android:textStyle="bold" />
+    <SeekBar android:id="@+id/volume_seek_bar" android:layout_width="match_parent" android:layout_height="wrap_content" android:max="100" android:progress="100" />
+    <TextView android:id="@+id/volume_value" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="100%" />
+
+    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+        android:layout_marginTop="12dp" android:text="Баланс L/R" android:textStyle="bold" />
+    <SeekBar android:id="@+id/balance_seek_bar" android:layout_width="match_parent" android:layout_height="wrap_content" android:max="200" android:progress="100" />
+    <TextView android:id="@+id/balance_value" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="0%" />
+
+    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+        android:layout_marginTop="12dp" android:text="Эквалайзер" android:textStyle="bold" />
+    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Bass" />
+    <SeekBar android:id="@+id/bass_seek_bar" android:layout_width="match_parent" android:layout_height="wrap_content" android:max="1000" android:progress="500" />
+    <TextView android:id="@+id/bass_value" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="0 dB" />
+    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Treble" />
+    <SeekBar android:id="@+id/treble_seek_bar" android:layout_width="match_parent" android:layout_height="wrap_content" android:max="1000" android:progress="500" />
+    <TextView android:id="@+id/treble_value" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="0 dB" />
+
     <TextView android:id="@+id/empty_label" android:layout_width="match_parent" android:layout_height="wrap_content" android:paddingTop="8dp" />
     <androidx.recyclerview.widget.RecyclerView android:id="@+id/track_list" android:layout_width="match_parent" android:layout_height="0dp" android:layout_weight="1" />
 </LinearLayout>

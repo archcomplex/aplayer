@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.provider.MediaStore
 import android.widget.Button
 import android.widget.EditText
+import android.widget.SeekBar
 import android.widget.TextView
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
@@ -46,6 +47,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        setupEqualizerControls()
+
         adapter = TrackAdapter { track -> playTrack(track) }
         findViewById<RecyclerView>(R.id.track_list).apply {
             layoutManager = LinearLayoutManager(this@MainActivity)
@@ -63,6 +66,73 @@ class MainActivity : AppCompatActivity() {
         findViewById<Button>(R.id.radio_button).setOnClickListener { showRadioUrlDialog() }
         requestAudioPermission()
         connectToPlaybackService()
+    }
+
+    private fun setupEqualizerControls() {
+        val volumeSeekBar = findViewById<SeekBar>(R.id.volume_seek_bar)
+        val balanceSeekBar = findViewById<SeekBar>(R.id.balance_seek_bar)
+        val bassSeekBar = findViewById<SeekBar>(R.id.bass_seek_bar)
+        val trebleSeekBar = findViewById<SeekBar>(R.id.treble_seek_bar)
+        val volumeValue = findViewById<TextView>(R.id.volume_value)
+        val balanceValue = findViewById<TextView>(R.id.balance_value)
+        val bassValue = findViewById<TextView>(R.id.bass_value)
+        val trebleValue = findViewById<TextView>(R.id.treble_value)
+
+        volumeSeekBar.max = 100
+        volumeSeekBar.progress = PlaybackService.instance?.getVolumePercent() ?: 100
+        volumeValue.text = "${volumeSeekBar.progress}%"
+        volumeSeekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+            override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
+                volumeValue.text = "$progress%"
+                PlaybackService.instance?.setVolumePercent(progress)
+            }
+            override fun onStartTrackingTouch(seekBar: SeekBar?) = Unit
+            override fun onStopTrackingTouch(seekBar: SeekBar?) = Unit
+        })
+
+        balanceSeekBar.max = 200
+        balanceSeekBar.progress = 100
+        balanceValue.text = "0%"
+        balanceSeekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+            override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
+                val balance = progress - 100
+                val label = when {
+                    balance > 0 -> "R ${balance}%"
+                    balance < 0 -> "L ${-balance}%"
+                    else -> "0%"
+                }
+                balanceValue.text = label
+                PlaybackService.instance?.setStereoBalance(balance)
+            }
+            override fun onStartTrackingTouch(seekBar: SeekBar?) = Unit
+            override fun onStopTrackingTouch(seekBar: SeekBar?) = Unit
+        })
+
+        bassSeekBar.max = 1000
+        bassSeekBar.progress = 500
+        bassValue.text = "0 dB"
+        bassSeekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+            override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
+                val level = (progress - 500) / 10
+                bassValue.text = "${level} dB"
+                PlaybackService.instance?.setBandLevel(0, level)
+            }
+            override fun onStartTrackingTouch(seekBar: SeekBar?) = Unit
+            override fun onStopTrackingTouch(seekBar: SeekBar?) = Unit
+        })
+
+        trebleSeekBar.max = 1000
+        trebleSeekBar.progress = 500
+        trebleValue.text = "0 dB"
+        trebleSeekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+            override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
+                val level = (progress - 500) / 10
+                trebleValue.text = "${level} dB"
+                PlaybackService.instance?.setBandLevel(1, level)
+            }
+            override fun onStartTrackingTouch(seekBar: SeekBar?) = Unit
+            override fun onStopTrackingTouch(seekBar: SeekBar?) = Unit
+        })
     }
 
     private fun connectToPlaybackService() {

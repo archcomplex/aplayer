@@ -12,5 +12,8 @@ Android audio player for local music and online radio.
 - Lock-screen, notification and headset/media-button controls
 - Import of local M3U/M3U8 playlists
 - Direct HTTP/HTTPS online radio playback
+- Volume control from 0 to 100
+- Stereo balance L/R control
+- Equalizer section with bass/treble adjustments
 
-Planned next: saved playlists, equalizer controls, sleep timer and Android Auto.
+Planned next: saved playlists, extended equalizer presets, sleep timer and Android Auto.
