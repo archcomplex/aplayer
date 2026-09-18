@@ -8,6 +8,6 @@ data class Track(
     val uri: String,
     val duration: Long = 0L,
     val size: Long = 0L,
-    val bitrate: String = "—",
+    val date: Long = 0L,
     var favorite: Boolean = false
 )
